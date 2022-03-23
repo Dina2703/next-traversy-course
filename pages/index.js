@@ -1,8 +1,8 @@
 import Head from "next/head";
 import Image from "next/image";
-import clientPromise from "../lib/mongodb";
 
-export default function Home({ blogs }) {
+export default function Home({ albums }) {
+  console.log(albums);
   return (
     <div>
       <Head>
@@ -14,31 +14,20 @@ export default function Home({ blogs }) {
         <div>
           <h3>hello</h3>
         </div>
-
-        <div>
-          {blogs.map((blog, index) => {
-            return (
-              <div key={index}>
-                <h2>{blog.title}</h2>
-                <p>{blog.snippet}</p>
-              </div>
-            );
-          })}
-        </div>
       </>
     </div>
   );
 }
 
-export async function getStaticProps() {
-  const client = await clientPromise;
-
-  const db = client.db("Cluster0");
-
-  let blogs = await db.collection("blogs").find({}).toArray();
-  blogs = JSON.parse(JSON.stringify(blogs));
+export const getStaticProps = async () => {
+  const res = await fetch(
+    `https://jsonplaceholder.typicode.com/posts?_limit=6`
+  );
+  const albums = await res.json();
 
   return {
-    props: { blogs },
+    props: {
+      albums,
+    },
   };
-}
+};
