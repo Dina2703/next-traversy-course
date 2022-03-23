@@ -30,7 +30,7 @@ export default function Home({ blogs }) {
   );
 }
 
-export async function getServerSideProps(context) {
+export async function getStaticProps() {
   const client = await clientPromise;
 
   const db = client.db("Cluster0");
