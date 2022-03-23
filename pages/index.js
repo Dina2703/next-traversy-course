@@ -1,8 +1,9 @@
 import Head from "next/head";
 import Image from "next/image";
+import AriticleList from "../components/AriticleList";
 
-export default function Home({ albums }) {
-  console.log(albums);
+export default function Home({ articles }) {
+  console.log(articles);
   return (
     <div>
       <Head>
@@ -11,9 +12,7 @@ export default function Home({ albums }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <>
-        <div>
-          <h3>hello</h3>
-        </div>
+        <AriticleList articles={articles} />
       </>
     </div>
   );
@@ -23,11 +22,11 @@ export const getStaticProps = async () => {
   const res = await fetch(
     `https://jsonplaceholder.typicode.com/posts?_limit=6`
   );
-  const albums = await res.json();
+  const articles = await res.json();
 
   return {
     props: {
-      albums,
+      articles,
     },
   };
 };
